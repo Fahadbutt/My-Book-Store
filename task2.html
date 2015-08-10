@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en" lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+
+<head>
+     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+
+
+    <title>Bootstrap Case</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+    <style>
+ #colorstrip{
+    width: 100%; height: 200px;
+     background-color:#a1a1a1;
+
+}
+.list-inline li a {color:white;}
+
+.div3{
+    float:right;  }
+
+ .icon-success{color:white;}
+
+#wh{color: coral;}
+#yel{color: crimson;}
+
+ td {
+    height: 10px;
+     width:50px;
+
+}
+  th {
+height: 10px;
+     width:50px;
+
+    text-align: left;
+}
+
+ .div4 {
+    border: 2px solid #a1a1a1;
+    padding: 5px 4px;
+    background: #dddddd;
+    width: 50px;
+    border-radius: 5px;
+}
+
+
+    </style>
+
+
+
+</head>
+
+
+<body>
+
+
+
+<div class="container-fluid">
+<!-------------------------------  Header ----------------------------------------------------------->
+<nav class="navbar" id="colorstrip">
+
+
+
+
+
+<!-------------------------------  Name given  ------------------------------------------------------->
+<br><h1 style="text-align:Center"><p1 ><b>BOOK</b></p1><p2 ><b>STORE</b></p2></h1>
+
+
+    <br><div class="navbar-footer">
+      <ul class="list-inline">
+
+         <br><br><br>
+          &nbsp
+
+<!-------------------------------  Different Search by options Given to User to find Books ----------------------------------------------------------->
+
+         <span class ="glyphicon glyphicon-search icon-success"></span>
+
+         <li><b>SearchBook:</b></li>
+
+
+          <select id='filter-option' onchange="Search('sea')">
+          <option selected>select</option>
+          <option value="bnm">By Book Name</option>
+          <option value="ban">By Author Name</option>
+          <option value="banm">By Book&Author Name</option>
+          <option value="al" >All</option>
+
+          </select>
+
+
+<!-------------------------------  INVENTORY OF BOOK STORE ----------------------------------------------------------->
+		  
+        <li><a  onclick="document.getElementById('invent').innerHTML= Inventory(Books_list,'tb')"><b>Inventory</b></a></li>
+ 
+<!-------------------------------  BEST SELLERS IN BOOK STORE ----------------------------------------------------------->
+     <li><a onclick="document.getElementById('best').innerHTML= B_Sellers()"><b>Best Sellers</b></a></li>
+	 
+<!-------------------------------  ADD BOOKS IN BOOKSTORE (A NEW OR  AN OLD ONE )----------------------------------------------------------->
+        <li><a onclick="document.getElementById('add').innerHTML = Book_Add()"><b>Add Book</b></a></li>
+      </ul></div>
+</nav></div>
+
+<script>
+
+<!-----------------------------------------------  BOOK PROTOTYPE  ----------------------------------------------------------->
+    function book (Book_name,Book_Edition,Book_Author,Book_Price,Books_Available,Books_Sold)
+{
+    this.Book_name=Book_name;
+    this.Book_Edition=Book_Edition;
+    this.Book_Author=Book_Author;
+    this.Book_Price=Book_Price;
+    this.Books_Available=Books_Available;
+
+    this.Books_Sold =Books_Sold;
+
+}
+
+
+
+<!-------------------------------  INSERTING SOME BOOKS MANUALLY  ----------------------------------------------------------->
+
+var Book1=new book('Electric Circuits Fundamentals',5,'Alexander Sadiku',20,10,0);
+var Book2=new book('Applied Probability and Statistics',3,'Andreas Robin',25,3,0);
+var Book3=new book('Physics',7,'Pattison',15,5,0);
+var Book4=new book('Data Structures',3,'Mike Tyson',35,12,0);
+var Book5=new book('Physics',8,'Andrea',15,5,0);
+
+
+<!-------------------------------  Book_list: LIST IN WHICH ALL BOOKS ARE STORED ------------------------------------------->
+var Books_list=[Book1,Book2,Book3,Book4,Book5];
+
+
+
+<!-------------------------------  INVENTORY FUNCTION : it takes and BOOK object from Book_list and prints its all attributes in a table ----------->
+<!--------------------------------- It runs in a  loop untill all attributes of available Books are printed ---------------------------------------->
+function Inventory(Book_List,id)
+ {
+
+    if(Book_List.length>0) {
+        for (var i = 0; i < Book_List.length; i++) { <!---LOOP for Printing BOOKS in Table form-->
+            if (i == 0) <!--Prints header of Table Once-->
+                document.getElementById(id).innerHTML = "<tbody><tr><th>Book Name</th><th>Book Edition</th><th>Book Author</th><th>Book Price</th><th>Books Available</th><th>Buy</th></tr>";
+
+            document.getElementById(id).innerHTML += "<tr><td>" + Book_List[i].Book_name + "</td><td>" + Book_List[i].Book_Edition + "</td><td>" + Book_List[i].Book_Author
+                    + "</td><td>" + Book_List[i].Book_Price + "</td><td>" + Book_List[i].Books_Available +"</td><td>"+
+					
+					<!------------------ A BUY button is created with ID= ROW number. > Each Book has a unique ID Button  --------------------------------->
+					<!----On button click sold() is called and ID of that clicked button is passed as a parameter to know which button is clicked -- >> sold(id) ---->
+                    <!---- Button id starts from 0 upto the no of books we have in BOOK STORE-------------------------->
+					"<input type= button  id =" +i+  " value=buy onclick='sold(this.id)'> </button>" +"</td></tr>";
+        }
+
+        document.getElementById(id).innerHTML += "<tr><td></td></tr> " + "<tr></tr>";
+    }
+ else
+    {
+	<!-------------------------------  ALERT: If BOOK STORE has no book ----------------------------------------------------------->
+        window.alert("No Result Found");
+    }}
+
+<!-------------------------------  BOOK SOLD function: On clicking BUY button it is called ----------------------------------------------------------->
+ 
+ 
+    function sold(id)
+    {
+
+        for(var i=0;i<Books_list.length;i++) <!---- Loops through the Books in the Book List->
+
+        {
+            if(i==id)  <!--- Check to determine which Book BUY Button was clicked  -->
+            {
+                if(Books_list[i].Books_Available==0)    <!--- Check to determine if the Book is not available-------->
+                window.alert("Book is not available");  <!----Window alert on no Book available---------------------->
+                
+				else { <!----If the Book is available---------->
+                    <!---Increment Books_sold attribute of that specific Book  and Decrement Books_Available --->
+					Books_list[i].Books_Sold += 1;
+                    Books_list[i].Books_Available-=1;
+                    <!--- Prints the INVENTORY after a BUY of Book--->
+					Inventory(Books_list,"tb");
+                }
+            }
+        }
+    }
+
+	
+	
+<!-------------Function for Best Sellers in BOOK STORE ------------------->	
+    function B_Sellers()
+    {   var id="tb";   <!-- div ID is stored in 'id'->
+         var Book_List_sorted;
+        Book_List_sorted = Books_list.slice();  <!-- A copy of Books List is created->
+        var len = Book_List_sorted.length;       		
+   for (var i = len-1; i>=0; i--)  <!------ Nested Loop for Sorting Book_List_sorted into Descending order based on their Books_Sold attribute----->
+   {for(var j = 1; j<=i; j++)
+     {   if(Book_List_sorted[j-1].Books_Sold <= Book_List_sorted[j].Books_Sold)
+       {   var temp = Book_List_sorted[j-1];
+           Book_List_sorted[j-1] = Book_List_sorted[j];
+           Book_List_sorted[j] = temp;}}}
+		   <!-----Prints the Books in a Table with the Book sold most at the TOP and Book with least sale at Bottom -->
+        for(var i=0;i<Book_List_sorted.length;i++)
+        {     if (i == 0) <!--Prints header of Table Once--> 
+             document.getElementById(id).innerHTML = "<tbody><th>Book Name</th><th>Book Edition</th><th>Book Author</th><th>Book Price</th><th>Books Sold</th>";
+            document.getElementById(id).innerHTML += "<tr><td>" + Book_List_sorted[i].Book_name + "</td><td>" + Book_List_sorted[i].Book_Edition + "</td><td>" + Book_List_sorted[i].Book_Author
+           + "</td><td>" + Book_List_sorted[i].Book_Price + "</td><td>" + Book_List_sorted[i].Books_Sold + "</td></tr>";}
+            document.getElementById(id).innerHTML += "<tr><td></td></tr> " + "<tr></tr>"; }
+
+
+function Search_by_name()  <!-- This function is called if User wants to Search a BOOK just by name of book ->
+{
+    var n= document.getElementById('name').value; <!--- gets the book name Entered by User--->
+    var new1 =[];
+
+   for(var i=0;i<Books_list.length;i++)
+   {
+           if(Books_list[i].Book_name==n) <!--- Finds the Book in BOOK STORE with Book Name matching-->
+               new1.unshift( Books_list[i]);} <!-- Adds Matched Book in a new LIST -->
+               Inventory(new1,'tb')  <!-- Prints the Searched Book in a Table Form Present in INVENTORY-->
+}
+
+    function Search_by_aname() {  <!-- This function is called if User wants to Search a BOOK just by  Author-name of book ->
+
+        var n1 = document.getElementById('aname').value;  <!--- gets the book Author name Entered by User--->
+        var new1 = [];
+        for (var i = 0; i < Books_list.length; i++) {   
+            if (Books_list[i].Book_Author == n1) <!--- Finds the Book in BOOK STORE with Author Name matching-->
+                new1.unshift(Books_list[i]);}}  <!-- Adds Matched Book in a new LIST -->
+        
+	function Search_by_bname() { <!-- This function is called if User wants to Search a BOOK  by  Author-name and name of book ->
+            var n = document.getElementById('name').value ; <!--- gets the book name Entered by User--->
+            var n1 = document.getElementById('aname').value; <!--- gets the book Author name Entered by User--->
+            var new1 = [];
+
+            for (var i = 0; i < Books_list.length; i++) {
+                if ((Books_list[i].Book_Author == n1) && (Books_list[i].Book_name == n)) <!--- Finds the Book in BOOK STORE with Book Name & Author name matching-->
+                    new1.unshift(Books_list[i]); <!-- Adds Matched Book in a new LIST -->
+					}
+           Inventory(new1, 'tb')   <!-- Prints the Searched Book in a Table Form Present in INVENTORY-->
+        }
+
+    function Search_all() {  <!-- This function is called if User wants to Search a BOOK  by  Author-name and name of book and Book Edition ->
+            var n = document.getElementById('name').value; <!--- gets the book name Entered by User--->
+            var n1 = document.getElementById('aname').value; <!--- gets the book Author name Entered by User--->
+            var n2 = document.getElementById('Ed').value; <!--- gets the book Edition Entered by User--->
+            var new1 = [];
+             for (var i = 0; i < Books_list.length; i++) {
+			 <!--- Finds the Book in BOOK STORE with Book Name , Author name & Book Edition matching-->
+                if ((Books_list[i].Book_Author == n1) && (Books_list[i].Book_name == n)&& (Books_list[i].Book_Edition == n2))
+                    new1.unshift(Books_list[i]); <!-- Adds Matched Book in a new LIST -->
+               }
+            Inventory(new1, 'tb')  <!-- Prints the Searched Book in a Table Form Present in INVENTORY-->
+			}
+
+
+        function Search(id) {  <!-- This Function is called When from Drop Down User Select Search Options-->
+            e = document.getElementById('filter-option'); <!-- Gets the ID of the Selected Option->
+            val = e.options[e.selectedIndex].value;
+         if (val === "bnm") {  <!-- Check for ID its the Search by Book Name->
+                document.getElementById(id).innerHTML = "<br> Book Name: <input type='text' name='BName' value='Write Book name' id='name'><br>" +  <!-- inserts a text Box for Book name to be entered->
+                                                        "<button  id='btn' onClick='Search_by_name()'>Submit</button>"; <!-- On click call search_by_name() ->
+														}
+		if (val === "ban") { <!-- Check for ID its the Search by Author Name->
+                document.getElementById(id).innerHTML = "<br> Author Name: <input type='text' name='AName' value='Write Author name' id='aname'><br>" +
+				                                                                     <!-- inserts a text Box for Author name to be entered->
+                "<button  id='btn' onClick='Search_by_aname()'>Submit</button>"; }  <!-- On click call search_by_aname() ->
+        if (val === "banm") { <!-- Check for ID its the Search by Author Name & Book name->
+                document.getElementById(id).innerHTML = "<br>Book Name:&nbsp &nbsp   <input type='text' name='BName' value='Write Book name' id='name'><br>" +
+                        "Author Name: <input type='text' name='AName' value='Write Author name' id='aname'><br>" + <!-- inserts a text Box for Book name & Author name to be entered->
+
+                        "<button  id='btn' onClick='Search_by_bname()'>Submit</button>"; <!-- On click call search_by_bname() ->
+						}
+         if (val === "al") { <!-- Check for ID its the Search by Author Name ,Book name and Book Edition->
+                document.getElementById(id).innerHTML = "<br>Book Name:&nbsp &nbsp   <input type='text' name='BName' value='Write Book name' id='name'><br>" +
+                        "Author Name: <input type='text' name='AName' value='Write Author name' id='aname'><br>" +
+                       "Book Edition:&nbsp  <input type='text' name='Edition' value='Write Book Edition' id='Ed'><br>"+ <!-- inserts a text Box for Book name ,Author name & Book Editon to be entered->
+                        "<button  id='btn' onClick='Search_all()'>Submit</button>"; <!-- On click call search_all() ->
+}}
+
+<!--- This Function inserts HTML code for text boxes if User wants to ADD a BOOK -->
+function Book_Add()
+{  var id="sea";  <!-- Got the ID for div -->
+  document.getElementById(id).innerHTML = "<br>Book Name:&nbsp &nbsp   <input type='text' name='BName' value='Write Book name' id='name'><br>" +
+                        "<br>Author Name: <input type='text' name='AName' value='Write Author name' id='aname'><br>" +
+                       "<br>Book Edition:&nbsp  <input type='text' name='Edition' value='Write Book Edition' id='Ed'><br>"+ 
+                       "<br>Book Price:&nbsp &nbsp <input type='text' name='Price' value='Write Book price' id='pc'><br>"+ <!--Insert text boxes to Add a Book--->
+                        "<br><button  id='btn1' onClick='ADD_Book()'>ADD</button>";  <!-- On click call ADD_Book-->
+}
+
+<!-- This Function ADD books in BOOK STORE-->
+function ADD_Book()
+{
+var n= document.getElementById('name').value; <!--Gets Book name entered->
+var n1=document.getElementById('aname').value; <!--Gets Author name entered->
+var n2= document.getElementById('Ed').value;<!--Gets Book Edition Entered->
+var n3= document.getElementById('pc').value; <!--Gets Book Price Entered->
+var n4=1;
+var n5=0;
+var l=0;
+for (var i = 0; i < Books_list.length; i++)
+ {
+                if ((Books_list[i].Book_Author == n1) && (Books_list[i].Book_name == n)&& (Books_list[i].Book_Edition == n2)) <!--Checks if the Book is already available in BOOK STORE->
+                {
+                Books_list[i].Books_Available+=n4;<!--If Book is available Increase Availibility count by one->
+               l=1;
+                 Inventory(Books_list,'tb');  <!--Display INVENTORY->
+                }
+
+    }
+ if (l == 0) {
+     var Bo =  new book(n,n2,n1,n3,n4,n5); <!--Create  new BOOK object if a new Book is inserted->
+     Books_list.unshift(Bo);  <!--Adds Book in the Books_list which has all available Books-->
+    Inventory(Books_list,'tb'); <!-- Prints INVENTORY-->
+
+ }
+}
+</script>
+
+<div class="container-fluid">
+<table class ="table"  id="tb" >
+
+
+</table></div>
+
+<div id="sea">
+
+</div>
+
+
+</body>
+</html>
